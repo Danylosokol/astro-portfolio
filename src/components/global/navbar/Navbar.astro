@@ -1,0 +1,36 @@
+---
+import Container from "@components/Container.astro";
+import { NAVBAR } from "@consts";
+---
+
+<header
+  class="fixed left-0 top-0 w-full py-6 border-b border-dashed border-secondary z-30 bg-primary"
+>
+  <Container>
+    <div class="flex items-center justify-between">
+      <a href="#">
+        <img
+          class="object-cover-cover h-10 w-10"
+          src={NAVBAR.logo.src}
+          alt={NAVBAR.logo.alt}
+        />
+      </a>
+      <nav>
+        <ul class="flex items-center gap-x-8">
+          {
+            NAVBAR.links.map((link) => (
+              <li>
+                <a
+                  class="hover:text-secondary-bright duration-500"
+                  href={link.href}
+                >
+                  {link.name}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+    </div>
+  </Container>
+</header>

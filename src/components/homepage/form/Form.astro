@@ -1,0 +1,152 @@
+---
+import Container from "@components/Container.astro";
+import { Icon } from "astro-icon/components";
+import loaderGif from "@assets/img/components/form/loader.gif";
+
+const FORM_ENDPOINT = import.meta.env.PUBLIC_HOMEPAGE_FORM_ENDOPINT;
+console.log(FORM_ENDPOINT);
+---
+
+<section class="mb-24">
+  <Container>
+    <h2 class="font-semibold text-4xl mb-8">Get in touch!</h2>
+    <section
+      class="flex flex-wrap gap-y-8 gap-x-5 justify-around lg:justify-between"
+    >
+      <form
+        action={FORM_ENDPOINT}
+        method="POST"
+        class="w-full"
+        id="contact-form"
+      >
+        <input
+          type="text"
+          name="name"
+          class="block w-0 h-0 m-0 p-0 border-0"
+          auto-complete="new-password"
+          aria-hidden="true"
+        />
+        <input
+          type="email"
+          name="email"
+          class="block w-0 h-0 m-0 p-0 border-0"
+          auto-complete="new-password"
+          aria-hidden="true"
+        />
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
+          <div class="relative">
+            <input
+              type="text"
+              id="fullName"
+              name="honeyfreename"
+              required
+              class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-white bg-primary-lighter border-1 border border-secondary appearance-none focus:outline-none focus:ring-0 focus:border-primary-lighter peer"
+              placeholder=" "
+            />
+            <label
+              html-for="fullName"
+              class="absolute text-base text-secondary-bright duration-300 transform -translate-y-4 scale-85 top-2 z-10 origin-[0] bg-transparent peer-focus:px-1.5 peer-focus:text-secondary-bright peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-85 peer-focus:-translate-y-4 left-1"
+            >
+              Full Name *
+            </label>
+          </div>
+          <div class="relative">
+            <input
+              type="email"
+              id="email"
+              name="honeyfreeemail"
+              required
+              class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-white bg-primary-lighter border-1 border border-secondary appearance-none focus:outline-none focus:ring-0 focus:border-primary-lighter peer invalid:[&:not(:placeholder-shown):not(:focus)]:border-accent-wrong"
+              placeholder=" "
+            />
+            <label
+              html-for="email"
+              class="absolute text-base text-secondary-bright duration-300 transform -translate-y-4 scale-85 top-2 z-10 origin-[0] bg-transparent peer-focus:px-1.5 peer-focus:text-secondary-bright peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-85 peer-focus:-translate-y-4 left-1"
+            >
+              Email *
+            </label>
+          </div>
+        </div>
+        <div class="relative w-full mb-3">
+          <textarea
+            id="floating_outlined"
+            required
+            name="message"
+            class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-white bg-primary-lighter border-1 border border-secondary appearance-none focus:outline-none focus:ring-0 focus:border-primary-lighter peer"
+            placeholder=" "></textarea>
+          <label
+            html-for="floating_outlined"
+            class="absolute text-base text-secondary-bright duration-300 transform -translate-y-4 scale-85 top-2 z-10 origin-[0] bg-transparent peer-focus:px-1.5 peer-focus:text-secondary-bright peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-[1.5rem] peer-focus:top-2 peer-focus:scale-85 peer-focus:-translate-y-4 left-1"
+          >
+            Your message *
+          </label>
+        </div>
+        <div id="captcha" class="hidden"></div>
+        <button
+          type="submit"
+          id="submit-btn"
+          class="flex items-center justify-center border border-secondary duration-500 hover:bg-primary-lighter py-2 px-4 text-center cursor-pointer font-medium gap-x-2 outline-none w-full"
+        >
+          <Icon name="mdi:send" />
+          Send
+        </button>
+      </form>
+
+      <section id="loading-spinner" class="w-full hidden">
+        <div class="flex justify-center items-center">
+          <img
+            width="64"
+            class="w-16 h-auto"
+            src={loaderGif.src}
+            alt="loading spinner"
+          />
+        </div>
+      </section>
+
+      <section id="form-message" class="w-full text-center text-lg hidden">
+        <!-- Success or error message will be injected here -->
+      </section>
+    </section>
+  </Container>
+</section>
+
+<script>
+  var xhr = new XMLHttpRequest();
+
+  const form = document.getElementById("contact-form");
+  const submitBtn = document.getElementById("submit-btn");
+  const loadingSpinner = document.getElementById("loading-spinner");
+  const formMessage = document.getElementById("form-message");
+
+  const handleFormSubmition = (event) => {
+    event.preventDefault();
+
+    // Show the loading spinner and hide the form
+    form.classList.add("hidden");
+    loadingSpinner.classList.remove("hidden");
+
+    const formData = new FormData(form);
+
+    xhr.open("POST", form.action, true);
+    xhr.setRequestHeader("Accept", "application/json");
+
+    xhr.send(formData);
+
+    xhr.onload = function () {
+      loadingSpinner.classList.add("hidden");
+
+      if (xhr.status === 200) {
+        formMessage.textContent = "Thank you for your submission!";
+        formMessage.classList.add("text-green-500");
+        form?.reset();
+      } else {
+        formMessage.innerHTML = `SSomething went wrong, try again later or email me at <a href="mailto:danylo.sokol2504@gmail.com" class="underline">danylo.sokol2504@gmail.com</a>`;
+        formMessage.classList.add("text-red-500");
+      }
+
+      formMessage.classList.remove("hidden");
+    };
+  };
+
+  form.addEventListener("submit", handleFormSubmition, true);
+</script>

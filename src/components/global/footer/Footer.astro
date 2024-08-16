@@ -1,0 +1,45 @@
+---
+import { HERO } from "@consts";
+import { Icon } from "astro-icon/components";
+import Container from "@components/Container.astro";
+import type { Socials } from "@types";
+
+const socialsKeys = Object.keys(HERO.socials) as Array<keyof Socials>;
+const socials = HERO.socials;
+---
+
+<footer class="border-t border-dashed border-secondary">
+  <Container>
+    <div
+      class="flex lg:flex-row flex-col-reverse items-center lg:justify-between justify-center gap-y-4 py-10 text-secondary-bright"
+    >
+      <small>
+        <a
+          href="https://www.linkedin.com/in/danylo-sokol/"
+          target="_blank"
+          rel="noreferer noopener"
+        >
+          Developed by{" "}
+          <span class="hover:text-accent-right duration-500">
+            Danylo Sokol
+          </span>
+        </a>
+      </small>
+      <ul class="flex gap-5 md:gap-3 text-2xl md:text-xl">
+        {
+          socialsKeys.map((social) => (
+            <li>
+              <a
+                href={socials[social].href}
+                rel="noreferer noopener"
+                class="hover:text-white duration-500"
+              >
+                <Icon name={socials[social].icon} class={social === "leetcode" ? "w-5 md:w-4" : ""} />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </Container>
+</footer>

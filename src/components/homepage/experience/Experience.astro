@@ -1,0 +1,78 @@
+---
+import { getCollection } from "astro:content";
+import Container from "@components/Container.astro";
+import { SKILLS } from "@consts";
+import moment from "moment";
+
+const allExperience = (await getCollection("experience")).sort(
+  (a, b) =>
+    new Date(b.data.dateStart).valueOf() - new Date(a.data.dateStart).valueOf()
+);
+const experience = await Promise.all(
+  allExperience.map(async (item) => {
+    const { Content } = await item.render();
+    return { ...item, Content };
+  })
+);
+---
+
+<section class="mb-40">
+  <Container>
+    <h2 class="font-semibold text-4xl mb-8">Experience</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+      <section class="border border-dashed border-secondary pt-5 pb-10 px-5">
+        <div class="flex flex-col gap-y-12">
+          {
+            experience.map((job) => (
+              <div class="flex items-start lg:gap-x-6 gap-x-4 max-w-2xl relative before:absolute before:bottom-0 before:top-[4.5rem] before:left-7 before:w-[1px] before:h-[calc(100%-50px)] before:bg-secondary">
+                <a
+                  href={job.data.website}
+                  rel="noreferer noopener"
+                  class="min-h-[60px] min-w-[60px] overflow-clip relative"
+                >
+                  <img
+                    src={job.data.logo.src.src}
+                    class="object-cover min-h-[60px] min-w-[60px]"
+                    alt={job.data.logo.alt}
+                  />
+                </a>
+                <div class="flex flex-col items-start">
+                  <h3 class="text-xl font-bold">{job.data.role}</h3>
+                  <p>{job.data.company}</p>
+                  <small class="text-sm text-secondary-bright mt-2 tracking-widest uppercase">
+                    {job.data.dateStart &&
+                      moment(job.data.dateStart).format("MMM YYYY") + " -"}
+                    {job.data.dateEnd
+                      ? moment(job.data.dateEnd).format("MMM YYYY")
+                      : job.data.dateStart && !job.data.dateEnd
+                        ? "Present"
+                        : ""}
+                  </small>
+                  <article>
+                    <job.Content />
+                  </article>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </section>
+      <section class="border border-dashed border-secondary pt-5 pb-10 px-5">
+        <h3 class="font-bold text-xl mb-2">My Skills</h3>
+        <p class="text-zinc-400 max-w-lg mb-4">
+          I&apos;ve spent more than 3 years working on my skills. In no
+          particular order, here are a few of them:
+        </p>
+        <ul class="flex flex-wrap gap-2 md:gap-5">
+          {
+            SKILLS.map((skill) => (
+              <li class="border font-semibold border-dashed border-secondary duration-500 hover:bg-primary-lighter px-2 md:px-4 py-2 cursor-default">
+                {skill}
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+    </div>
+  </Container>
+</section>
