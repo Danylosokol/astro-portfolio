@@ -114,39 +114,39 @@ console.log(FORM_ENDPOINT);
   var xhr = new XMLHttpRequest();
 
   const form = document.getElementById("contact-form");
-  const submitBtn = document.getElementById("submit-btn");
   const loadingSpinner = document.getElementById("loading-spinner");
   const formMessage = document.getElementById("form-message");
 
-  const handleFormSubmition = (event) => {
+  const handleFormSubmition = (event: SubmitEvent) => {
     event.preventDefault();
+    if (form && loadingSpinner && formMessage) {
+      // Show the loading spinner and hide the form
+      form.classList.add("hidden");
+      loadingSpinner?.classList.remove("hidden");
 
-    // Show the loading spinner and hide the form
-    form.classList.add("hidden");
-    loadingSpinner.classList.remove("hidden");
+      const formData = new FormData(form as HTMLFormElement);
 
-    const formData = new FormData(form);
+      xhr.open("POST", (form as HTMLFormElement).action, true);
+      xhr.setRequestHeader("Accept", "application/json");
 
-    xhr.open("POST", form.action, true);
-    xhr.setRequestHeader("Accept", "application/json");
+      xhr.send(formData);
 
-    xhr.send(formData);
+      xhr.onload = function () {
+        loadingSpinner.classList.add("hidden");
 
-    xhr.onload = function () {
-      loadingSpinner.classList.add("hidden");
+        if (xhr.status === 200) {
+          formMessage.textContent = "Thank you for your submission!";
+          formMessage.classList.add("text-green-500");
+          (form as HTMLFormElement).reset();
+        } else {
+          formMessage.innerHTML = `SSomething went wrong, try again later or email me at <a href="mailto:danylo.sokol2504@gmail.com" class="underline">danylo.sokol2504@gmail.com</a>`;
+          formMessage.classList.add("text-red-500");
+        }
 
-      if (xhr.status === 200) {
-        formMessage.textContent = "Thank you for your submission!";
-        formMessage.classList.add("text-green-500");
-        form?.reset();
-      } else {
-        formMessage.innerHTML = `SSomething went wrong, try again later or email me at <a href="mailto:danylo.sokol2504@gmail.com" class="underline">danylo.sokol2504@gmail.com</a>`;
-        formMessage.classList.add("text-red-500");
-      }
-
-      formMessage.classList.remove("hidden");
-    };
+        formMessage.classList.remove("hidden");
+      };
+    }
   };
 
-  form.addEventListener("submit", handleFormSubmition, true);
+  form?.addEventListener("submit", handleFormSubmition, true);
 </script>
