@@ -6,22 +6,23 @@ import "@/styles/global.css";
 
 interface Props {
   title: string;
+  description: string;
 }
 
-const { title } = Astro.props;
+const { title, description } = Astro.props;
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content="Astro description" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <meta property="og:image" content="URL OF IMAGE ONLY" />
+    <meta name="viewport" content="/opengraph-image.png" />
     <link rel="icon" type="image/ico" href="/favicon.ico" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
-  </head>
-  <body class="bg-primary text-white">
+  </head><body class="bg-primary text-white">
     <Navbar />
     <main>
       <slot />
