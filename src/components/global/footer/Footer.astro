@@ -33,6 +33,7 @@ const socials = HERO.socials;
                 href={socials[social].href}
                 rel="noreferer noopener"
                 class="hover:text-white duration-500"
+                aria-label={socials[social].name}
               >
                 <Icon name={socials[social].icon} class={social === "leetcode" ? "w-5 md:w-4" : ""} />
               </a>
