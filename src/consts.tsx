@@ -55,7 +55,7 @@ export const HERO: Hero = {
   title: "Software Engineer",
   description:
     "Experienced software engineer specialising in React, TypeScript, NextJS and NodeJS with a Bachelor's degree in Computer Science. Excited to contribute my skills and passion to your innovative projects.",
-  location: "United Kingdom",
+  location: "London UK",
   socials: SOCIALS,
   cv: {
     href: "https://drive.google.com/file/d/1p_d9vFu6bNtGD-2BG-Fc4G9iv6SDdBfb/view?usp=drive_link",
