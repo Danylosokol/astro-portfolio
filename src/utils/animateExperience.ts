@@ -52,11 +52,11 @@ const animateExperience = (entries: IntersectionObserverEntry[]) => {
 
 // Create Intersection Observer instances
 const observer = new IntersectionObserver(animateSkills, {
-  threshold: 0.3, // Trigger when 30% of the section is visible
+  threshold: 0.1, // Trigger when 10% of the section is visible
 });
 
 const experienceObserver = new IntersectionObserver(animateExperience, {
-  threshold: 0.3, // Trigger when 30% of the section is visible
+  threshold: 0.1, // Trigger when 10% of the section is visible
 });
 
 // Observe the section containing skills and experience
