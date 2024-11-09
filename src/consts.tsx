@@ -58,7 +58,7 @@ export const HERO: Hero = {
   location: "London UK",
   socials: SOCIALS,
   cv: {
-    href: "https://drive.google.com/file/d/1p_d9vFu6bNtGD-2BG-Fc4G9iv6SDdBfb/view?usp=drive_link",
+    href: "https://drive.google.com/file/d/1halrDnGUA8Ug3o-aTDrTcW640WTLirqU/view?usp=sharing",
     name: "Resume",
   },
   image: {
