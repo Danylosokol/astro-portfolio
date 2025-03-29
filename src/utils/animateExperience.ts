@@ -39,7 +39,7 @@ const animateExperience = (entries: IntersectionObserverEntry[]) => {
           x: 0,
           opacity: 1,
           stagger: 0.1,
-          duration: 0.75,
+          duration: 0.5,
           ease: "back.out(1.7)",
         }
       );
